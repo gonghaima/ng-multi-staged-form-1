@@ -1,0 +1,136 @@
+<div class="container">
+  <div class="review-container">
+    <h2>Review Your Application</h2>
+    <p class="step-indicator">Step 4 of 4</p>
+    
+    @if (errors().length > 0) {
+      <div class="errors">
+        @for (error of errors(); track error) {
+          <p class="error">{{ error }}</p>
+        }
+      </div>
+    }
+    
+    @if (!isSubmitted()) {
+      <div class="review-sections">
+        <div class="review-section">
+          <div class="section-header">
+            <h3>Personal Details</h3>
+            <button type="button" (click)="editPersonalDetails()" class="btn-edit">Edit</button>
+          </div>
+          @if (personalDetails(); as details) {
+            <div class="details-grid">
+              <div class="detail-item">
+                <span class="label">Name:</span>
+                <span class="value">{{ details.firstName }} {{ details.lastName }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Date of Birth:</span>
+                <span class="value">{{ details.dateOfBirth }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Email:</span>
+                <span class="value">{{ details.email }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Phone:</span>
+                <span class="value">{{ details.phoneNumber }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Address:</span>
+                <span class="value">{{ details.address.street }}, {{ details.address.city }}, {{ details.address.state }} {{ details.address.zipCode }}</span>
+              </div>
+            </div>
+          }
+        </div>
+        
+        <div class="review-section">
+          <div class="section-header">
+            <h3>Income Details</h3>
+            <button type="button" (click)="editIncomeDetails()" class="btn-edit">Edit</button>
+          </div>
+          @if (incomeDetails(); as details) {
+            <div class="details-grid">
+              <div class="detail-item">
+                <span class="label">Employment Status:</span>
+                <span class="value">{{ details.employmentStatus }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Annual Income:</span>
+                <span class="value">${{ details.annualIncome }}</span>
+              </div>
+              @if (details.employer) {
+                <div class="detail-item">
+                  <span class="label">Employer:</span>
+                  <span class="value">{{ details.employer }}</span>
+                </div>
+              }
+              @if (details.otherIncome && details.otherIncome > 0) {
+                <div class="detail-item">
+                  <span class="label">Other Income:</span>
+                  <span class="value">${{ details.otherIncome }}</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+        
+        <div class="review-section">
+          <div class="section-header">
+            <h3>Partner Details</h3>
+            <button type="button" (click)="editPartnerDetails()" class="btn-edit">Edit</button>
+          </div>
+          @if (partnerDetails(); as details) {
+            <div class="details-grid">
+              @if (details.hasPartner) {
+                <div class="detail-item">
+                  <span class="label">Partner:</span>
+                  <span class="value">{{ details.partnerFirstName }} {{ details.partnerLastName }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Partner Income:</span>
+                  <span class="value">${{ details.partnerIncome }}</span>
+                </div>
+              } @else {
+                <div class="detail-item">
+                  <span class="label">Partner Status:</span>
+                  <span class="value">No partner</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" (click)="goBack()" class="btn btn-secondary">
+          Back
+        </button>
+        <button 
+          (click)="submit()" 
+          [disabled]="!canSubmit() || isLoading()"
+          class="btn btn-primary submit-btn">
+          @if (isLoading()) {
+            <span class="loading-spinner"></span>
+            Submitting...
+          } @else {
+            Submit Application
+          }
+        </button>
+      </div>
+    }
+    
+    @if (isSubmitted()) {
+      <div class="success-container">
+        <div class="success-icon">✓</div>
+        <h3>Application Submitted Successfully!</h3>
+        <p>Your family benefit application has been received and is being processed.</p>
+        <p>You will receive a confirmation email shortly with your application reference number.</p>
+        
+        <button (click)="startNewApplication()" class="btn btn-primary">
+          Start New Application
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="form-container">
+    <h2>Partner Details</h2>
+    <p class="step-indicator">Step 3 of 4</p>
+    
+    <form [formGroup]="partnerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Do you have a partner? *</label>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" formControlName="hasPartner" [value]="true" />
+            <span class="radio-custom"></span>
+            Yes
+          </label>
+          <label class="radio-label">
+            <input type="radio" formControlName="hasPartner" [value]="false" />
+            <span class="radio-custom"></span>
+            No
+          </label>
+        </div>
+      </div>
+
+      <div *ngIf="partnerForm.get('hasPartner')?.value === true" class="partner-info">
+        <h3>Partner Information</h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="partnerFirstName">Partner's First Name *</label>
+            <input 
+              id="partnerFirstName"
+              type="text" 
+              formControlName="partnerFirstName" 
+              placeholder="Enter partner's first name"
+              [class.error]="partnerForm.get('partnerFirstName')?.invalid && partnerForm.get('partnerFirstName')?.touched" />
+            <div class="error-message" *ngIf="partnerForm.get('partnerFirstName')?.invalid && partnerForm.get('partnerFirstName')?.touched">
+              Partner's first name is required
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="partnerLastName">Partner's Last Name *</label>
+            <input 
+              id="partnerLastName"
+              type="text" 
+              formControlName="partnerLastName" 
+              placeholder="Enter partner's last name"
+              [class.error]="partnerForm.get('partnerLastName')?.invalid && partnerForm.get('partnerLastName')?.touched" />
+            <div class="error-message" *ngIf="partnerForm.get('partnerLastName')?.invalid && partnerForm.get('partnerLastName')?.touched">
+              Partner's last name is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="partnerIncome">Partner's Annual Income</label>
+          <div class="input-group">
+            <span class="input-prefix">$</span>
+            <input 
+              id="partnerIncome"
+              type="number" 
+              formControlName="partnerIncome" 
+              placeholder="0"
+              min="0"
+              [class.error]="partnerForm.get('partnerIncome')?.invalid && partnerForm.get('partnerIncome')?.touched" />
+          </div>
+          <div class="error-message" *ngIf="partnerForm.get('partnerIncome')?.invalid && partnerForm.get('partnerIncome')?.touched">
+            Partner's income must be 0 or greater
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="onBack()" class="btn btn-secondary">
+          Back
+        </button>
+        <button type="submit" [disabled]="partnerForm.invalid" class="btn btn-primary">
+          Review & Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

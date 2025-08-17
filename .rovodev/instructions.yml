@@ -1,0 +1,4 @@
+instructions:
+  - name: "State management using angular signal"
+    description: "this is an app for applying family benefit. It will be multiple page to collect user's personal details, user's income details, user's partner details. Then it will have a review and submit page to display/review/send data to backend."
+    content_file: "state-management-angular-signal.md"

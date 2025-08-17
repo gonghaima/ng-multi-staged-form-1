@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="form-container">
+    <h2>Income Details</h2>
+    <p class="step-indicator">Step 2 of 4</p>
+    
+    <form [formGroup]="incomeForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="employmentStatus">Employment Status *</label>
+        <select 
+          id="employmentStatus"
+          formControlName="employmentStatus"
+          [class.error]="incomeForm.get('employmentStatus')?.invalid && incomeForm.get('employmentStatus')?.touched">
+          <option value="">Select your employment status</option>
+          <option *ngFor="let option of employmentOptions" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+        <div class="error-message" *ngIf="incomeForm.get('employmentStatus')?.invalid && incomeForm.get('employmentStatus')?.touched">
+          Employment status is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="annualIncome">Annual Income *</label>
+        <div class="input-group">
+          <span class="input-prefix">$</span>
+          <input 
+            id="annualIncome"
+            type="number" 
+            formControlName="annualIncome" 
+            placeholder="0"
+            min="0"
+            [class.error]="incomeForm.get('annualIncome')?.invalid && incomeForm.get('annualIncome')?.touched" />
+        </div>
+        <div class="error-message" *ngIf="incomeForm.get('annualIncome')?.invalid && incomeForm.get('annualIncome')?.touched">
+          <span *ngIf="incomeForm.get('annualIncome')?.errors?.['required']">Annual income is required</span>
+          <span *ngIf="incomeForm.get('annualIncome')?.errors?.['min']">Annual income must be 0 or greater</span>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="incomeForm.get('employmentStatus')?.value === 'Employed Full-time' || incomeForm.get('employmentStatus')?.value === 'Employed Part-time'">
+        <label for="employer">Employer</label>
+        <input 
+          id="employer"
+          type="text" 
+          formControlName="employer" 
+          placeholder="Enter your employer name" />
+      </div>
+
+      <div class="form-group">
+        <label for="otherIncome">Other Income</label>
+        <div class="input-group">
+          <span class="input-prefix">$</span>
+          <input 
+            id="otherIncome"
+            type="number" 
+            formControlName="otherIncome" 
+            placeholder="0"
+            min="0"
+            [class.error]="incomeForm.get('otherIncome')?.invalid && incomeForm.get('otherIncome')?.touched" />
+        </div>
+        <small class="form-text">Include any additional income sources (investments, benefits, etc.)</small>
+        <div class="error-message" *ngIf="incomeForm.get('otherIncome')?.invalid && incomeForm.get('otherIncome')?.touched">
+          Other income must be 0 or greater
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="onBack()" class="btn btn-secondary">
+          Back
+        </button>
+        <button type="submit" [disabled]="incomeForm.invalid" class="btn btn-primary">
+          Next: Partner Details
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
